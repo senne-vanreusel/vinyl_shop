@@ -12,7 +12,7 @@ class RecordController extends Controller
             'Queen - Greatest Hits',
             'The Rolling Stones - Sticky Fingers',
             'The Beatles - Abbey Road',
-            'The Who - Tommygdtv'
+            'The Who - Tommy'
         ];
 
         return view('admin.records.index',[
