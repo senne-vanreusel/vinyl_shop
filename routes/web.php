@@ -18,12 +18,33 @@ use App\Genre;
 */
 
 Route::view('/', 'home');
+Route::get('Itunes','ItunesController@index');
+Route::get('shop', 'ShopController@index');
+Route::get('shop/{id}', 'ShopController@show');
+Route::get('contact-us', 'ContactUsController@show');
+Route::post('contact-us', 'ContactUsController@sendEmail');
 
-Route::view('contact-us', 'contact');
-
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     Route::redirect('/', '/admin/records');
-    Route::get('records', 'Admin\RecordController@index');
+    Route::resource('genres', 'Admin\GenreController');
+    Route::get('genres2/qryGenres', 'Admin\Genre2Controller@qryGenres');
+    Route::resource('genres2', 'Admin\Genre2Controller');
+    Route::resource('records', 'Admin\RecordController');
+    Route::resource('users', 'Admin\UserController');
+});
+
+Route::middleware(['auth'])->prefix('user')->group(function () {
+    Route::redirect('/', '/user/profile');
+    Route::get('profile', 'User\ProfileController@edit');
+    Route::post('profile', 'User\ProfileController@update');
+});
+
+Route::middleware(['auth'])->prefix('user')->group(function () {
+    Route::redirect('/', '/user/profile');
+    Route::get('profile', 'User\ProfileController@edit');
+    Route::post('profile', 'User\ProfileController@update');
+    Route::get('password', 'User\PasswordController@edit');
+    Route::post('password', 'User\PasswordController@update');
 });
 
 //ter ilustrate
@@ -38,3 +59,7 @@ Route::prefix('api')->group(function (){
        return Genre::with('records')->get();
    });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

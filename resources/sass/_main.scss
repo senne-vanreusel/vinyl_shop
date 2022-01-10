@@ -1,3 +1,16 @@
 main {
     min-height: 500px;
 }
+
+a.btn.disabled{
+    pointer-events: all;
+    cursor: not-allowed;
+}
+
+.close{
+    display: none;
+}
+
+.btn[disabled] {
+    cursor: not-allowed;
+}
